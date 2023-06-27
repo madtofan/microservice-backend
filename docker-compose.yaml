@@ -1,0 +1,15 @@
+version: "3.6"
+services:
+  email:
+    build: ./email
+    ports:
+      - "4001:4001"
+    depends_on:
+      - database
+  database:
+    image: postgres:9.6.2
+    volumes:
+      - ../multi-database:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES=app_email,app_email,app_email_admin:app_user,app_user,app_user_admin
+      - POSTGRES_PASSWORD="autotradingbotpassword"
