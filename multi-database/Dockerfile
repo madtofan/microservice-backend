@@ -1,7 +1,3 @@
-FROM library/postgres:9.6-alpine
+FROM library/postgres:15.3-alpine
 
-COPY create-multiple-postgresql-databases.sh /docker-entrypoint-initdb.d/
-
-RUN chmod +x /docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
-
-EXPOSE 5432
+COPY multi-database.sh /docker-entrypoint-initdb.d/

@@ -1,3 +1,11 @@
 .env
+.env.email
+.env.user
+.env.templating
+.env.api-endpoint
+common
 email
 api-endpoint
+templating
+user
+notification
