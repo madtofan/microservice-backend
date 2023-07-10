@@ -1,0 +1,14 @@
+[tasks.clone]
+command = "sh"
+args = ["./scripts/clone-all.sh"]
+
+[tasks.build]
+env = { COMPOSE_DOCKER_CLI_BUILD = 1, DOCKER_BUILDKIT = 1, DOCKER_DEFAULT_PLATFORM = "linux/amd64" }
+command = "docker-compose"
+args = ["build"]
+# command = "sh"
+# args = ["./scripts/build-containers.sh"]
+
+[tasks.start]
+command = "docker-compose"
+args = ["--env-file", "docker.env", "up"]
