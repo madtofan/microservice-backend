@@ -2,6 +2,7 @@
 .env.email
 .env.user
 .env.templating
+.env.notification
 .env.api-endpoint
 common
 email
