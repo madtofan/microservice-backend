@@ -20,6 +20,8 @@ services:
       - EMAIL_PORT=${EMAIL_SERVICE_PORT}
       - TEMPLATING_HOST=http://host.docker.internal
       - TEMPLATING_PORT=${TEMPLATING_SERVICE_PORT}
+      - NOTIFICATION_HOST=http://host.docker.internal
+      - NOTIFICATION_PORT=${NOTIFICATION_SERVICE_PORT}
   user:
     build:
       dockerfile: ./user/Dockerfile
@@ -44,6 +46,18 @@ services:
     environment:
       - SERVICE_URL=[::0]
       - SERVICE_PORT=${EMAIL_SERVICE_PORT}
+  notification:
+    build:
+      dockerfile: ./notification/Dockerfile
+    env_file:
+      - ./.env.notification
+    ports:
+      - "${NOTIFICATION_SERVICE_PORT}:${NOTIFICATION_SERVICE_PORT}"
+    depends_on:
+      - database
+    environment:
+      - SERVICE_URL=[::0]
+      - SERVICE_PORT=${NOTIFICATION_SERVICE_PORT}
   templating:
     build:
       dockerfile: ./templating/Dockerfile
