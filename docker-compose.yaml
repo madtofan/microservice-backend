@@ -2,7 +2,9 @@ version: "3.8"
 services:
   api-endpoint:
     build:
+      context: .
       dockerfile: ./api-endpoint/Dockerfile
+    platform: "linux/amd64"
     env_file:
       - ./.env.api-endpoint
     ports:
@@ -11,6 +13,7 @@ services:
       - user
       - email
       - templating
+      - notification
     environment:
       - SERVICE_URL=[::0]
       - SERVICE_PORT=${API_ENDPOINT_PORT}
@@ -24,9 +27,11 @@ services:
       - NOTIFICATION_PORT=${NOTIFICATION_SERVICE_PORT}
   user:
     build:
+      context: .
       dockerfile: ./user/Dockerfile
     env_file:
       - ./.env.user
+    platform: "linux/amd64"
     ports:
       - "${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
     depends_on:
@@ -36,7 +41,9 @@ services:
       - SERVICE_PORT=${USER_SERVICE_PORT}
   email:
     build:
+      context: .
       dockerfile: ./email/Dockerfile
+    platform: "linux/amd64"
     env_file:
       - ./.env.email
     ports:
@@ -48,7 +55,9 @@ services:
       - SERVICE_PORT=${EMAIL_SERVICE_PORT}
   notification:
     build:
+      context: .
       dockerfile: ./notification/Dockerfile
+    platform: "linux/amd64"
     env_file:
       - ./.env.notification
     ports:
@@ -60,7 +69,9 @@ services:
       - SERVICE_PORT=${NOTIFICATION_SERVICE_PORT}
   templating:
     build:
+      context: .
       dockerfile: ./templating/Dockerfile
+    platform: "linux/amd64"
     env_file:
       - ./.env.templating
     ports:
@@ -71,7 +82,7 @@ services:
       - SERVICE_URL=[::0]
       - SERVICE_PORT=${TEMPLATING_SERVICE_PORT}
   database:
-    image: postgres:15.3
+    image: postgres:16.0
     volumes:
       - ./multi-database:/docker-entrypoint-initdb.d
     environment:
